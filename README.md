@@ -6,7 +6,7 @@ QuarantineIQ connects GitHub Actions evidence with persistent engineering memory
 
 GitHub Actions → ingestion → current failure/code context → Hindsight recall → attention score → recommendation → Decision Challenger → human decision → outcome → Hindsight learning → future investigation
 
-## V3 capabilities
+## Capabilities
 
 - GitHub repository and GitHub Actions workflow/run/job ingestion
 - Failed-job log capture when available
