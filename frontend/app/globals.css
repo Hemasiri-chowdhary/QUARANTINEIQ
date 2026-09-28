@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+:root{--background:#f6f8fb;--foreground:#0f172a}
+@theme inline{--color-background:var(--background);--color-foreground:var(--foreground);--font-sans:var(--font-geist-sans);--font-mono:var(--font-geist-mono)}
+html,body{min-height:100%;background:var(--background)}
+body{color:var(--foreground);font-family:Arial,Helvetica,sans-serif}
+button,a,input,textarea,select{font:inherit}
+.shell-link{display:flex;align-items:center;gap:.6rem;border-radius:.7rem;padding:.65rem .75rem;margin-bottom:.25rem;color:#475569;font-size:.82rem;font-weight:600;transition:background-color .15s ease,color .15s ease}
+.shell-link:hover{background:#f1f5f9;color:#0f172a}
+.field{width:100%;border:1px solid #cbd5e1;border-radius:.75rem;background:white;padding:.7rem .8rem;font-size:.85rem;color:#0f172a;outline:none}
+.field:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.10)}
+.primary-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:.75rem;background:#0f172a;color:white;padding:.65rem .9rem;font-size:.8rem;font-weight:700;transition:background .15s ease,opacity .15s ease}
+.primary-btn:hover{background:#1e293b}.primary-btn:disabled{opacity:.55}
+.secondary-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:.75rem;border:1px solid #cbd5e1;background:white;color:#334155;padding:.65rem .9rem;font-size:.8rem;font-weight:700}
+.section-card{border:1px solid #e2e8f0;background:#fff;border-radius:1rem;padding:1.25rem;box-shadow:0 1px 2px rgba(15,23,42,.03)}
+.section-title{font-size:1.2rem;font-weight:700;letter-spacing:-.02em;color:#0f172a}
+.eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#2563eb}
+.notice-warning{border:1px solid #fde68a;background:#fffbeb;color:#92400e;border-radius:.8rem;padding:.8rem 1rem;font-size:.82rem}
+.notice-error{border:1px solid #fecaca;background:#fff1f2;color:#9f1239;border-radius:.8rem;padding:.8rem 1rem;font-size:.82rem}
+.notice-success{border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;border-radius:.8rem;padding:.8rem 1rem;font-size:.82rem}
+.source-chip{display:inline-flex;align-items:center;border-radius:999px;background:#f1f5f9;color:#475569;padding:.25rem .55rem;font-size:.65rem;font-weight:700;letter-spacing:.02em}
+.mini-stat{border:1px solid #e2e8f0;border-radius:.75rem;background:#f8fafc;padding:.7rem}.mini-stat span{display:block;font-size:.63rem;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8}.mini-stat b{display:block;margin-top:.2rem;font-size:.82rem;color:#0f172a}

@@ -1,0 +1,21 @@
+'use client';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import AppShell from '@/components/AppShell';
+import StatCard from '@/components/StatCard';
+import { getSystemStatus, getPatterns, getActivity } from '@/lib/api';
+
+export default function Home(){
+  const [status,setStatus]=useState<any>(null); const [patterns,setPatterns]=useState<any[]>([]); const [activity,setActivity]=useState<any[]>([]); const [error,setError]=useState('');
+  useEffect(()=>{Promise.all([getSystemStatus(),getPatterns(),getActivity()]).then(([s,p,a])=>{setStatus(s);setPatterns(p);setActivity(a);}).catch(e=>setError(e instanceof Error?e.message:'Unable to load workspace.'));},[]);
+  const tests=status?.tests||{}; const github=status?.github||{}; const hindsight=status?.hindsight||{};
+  return <AppShell><div className="space-y-7">
+    <section className="overflow-hidden rounded-3xl bg-slate-950 px-6 py-8 text-white sm:px-8 sm:py-10"><div className="max-w-5xl"><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-200">V3 • Engineering intelligence</span><span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${github.configured?'bg-emerald-400/15 text-emerald-300':'bg-amber-400/15 text-amber-300'}`}>{github.configured?'GitHub configured':'Demo mode'}</span></div><h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Investigate the failure. Remember the decision. Learn from the outcome.</h1><p className="mt-4 max-w-3xl text-sm leading-6 text-slate-300">QuarantineIQ connects real CI evidence with persistent engineering memory so teams can challenge risky quarantines and learn from what actually happened.</p><div className="mt-6 flex flex-wrap gap-3"><Link href="/tests" className="primary-btn !bg-blue-600 hover:!bg-blue-500">Review tests →</Link><Link href="/github" className="secondary-btn !border-white/15 !bg-white/5 !text-white">Connect GitHub</Link><Link href="/demo" className="secondary-btn !border-white/15 !bg-white/5 !text-white">See memory effect</Link></div></div></section>
+    {error&&<div className="notice-error">{error}</div>}
+    <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6"><StatCard label="Total tests" value={tests.total??'—'} detail="Workspace"/><StatCard label="Quarantined" value={tests.quarantined??'—'} detail="Awaiting review" tone="warning"/><StatCard label="Needs review" value={tests.needs_review??'—'} detail="New live failures"/><StatCard label="Active" value={tests.active??'—'} detail="In CI" tone="success"/><StatCard label="Hindsight" value={hindsight.memory_count??'—'} detail={hindsight.available?'Available':'Unavailable'}/><StatCard label="Patterns" value={patterns.length} detail="Recurring signals"/></section>
+    <div className="grid gap-5 lg:grid-cols-[1fr_0.8fr]">
+      <section className="section-card"><p className="eyebrow">Core V3 loop</p><h2 className="section-title">From real CI event to organizational learning</h2><div className="mt-6 grid gap-3 sm:grid-cols-2">{[['01','Detect','Receive a workflow run or sync GitHub Actions.'],['02','Investigate','Combine CI history, logs, commits and Hindsight memory.'],['03','Challenge','Surface caution when similar decisions ended in regressions.'],['04','Learn','Save the real outcome back into persistent memory.']].map(([n,t,d])=><div className="rounded-xl border border-slate-200 p-4" key={n}><span className="text-xs font-bold text-blue-600">{n}</span><h3 className="mt-2 text-sm font-bold">{t}</h3><p className="mt-1 text-xs leading-5 text-slate-500">{d}</p></div>)}</div></section>
+      <section className="section-card"><p className="eyebrow">Recent activity</p><h2 className="section-title">What changed recently</h2>{activity.length?<div className="mt-4 space-y-3">{activity.slice(0,6).map((item:any,i:number)=><div key={i} className="rounded-xl bg-slate-50 p-3"><div className="flex items-center justify-between gap-3"><b className="text-sm">{item.title}</b><span className="source-chip">{item.source}</span></div><p className="mt-1 text-xs text-slate-500">{item.detail}</p></div>)}</div>:<p className="mt-4 text-sm text-slate-500">No recent activity yet.</p>}</section>
+    </div>
+  </div></AppShell>
+}

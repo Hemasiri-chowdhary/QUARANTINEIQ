@@ -1,0 +1,34 @@
+name: QuarantineIQ V3 CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: "Simulate a payment timeout failure for QuarantineIQ ingestion"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  quarantineiq-demo-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run representative test
+        shell: bash
+        env:
+          SIMULATE_FAILURE: ${{ github.event.inputs.simulate_failure || 'false' }}
+        run: |
+          echo "QuarantineIQ test: test_payment_timeout::test_retry"
+          echo "Service: payment-service"
+          echo "Commit: $GITHUB_SHA"
+          if [[ "$SIMULATE_FAILURE" == "true" ]]; then
+            echo "ERROR payment gateway timeout after 5000ms"
+            echo "FAILED test_payment_timeout::test_retry"
+            exit 1
+          fi
+          echo "PASS test_payment_timeout::test_retry"
