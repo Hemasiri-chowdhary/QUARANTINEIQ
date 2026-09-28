@@ -1,4 +1,4 @@
-# QuarantineIQ V3
+# QuarantineIQ 
 
 QuarantineIQ connects GitHub Actions evidence with persistent engineering memory from Hindsight. It investigates failing CI tests, surfaces relevant past experiences, challenges risky quarantines, records the human decision and outcome, and feeds confirmed lessons back into memory.
 
